@@ -1,6 +1,8 @@
 '''import statements'''
 from flask import Flask, render_template
 import feedparser
+from waitress import serve
+
 
 # create instance of Flask
 app = Flask(__name__)
@@ -10,7 +12,7 @@ app = Flask(__name__)
 def index():
     '''Endpoint for accessing the Feed data'''
 
-    rss_news_urls = ["https://www.nsnam.org/feed.xml", "https://www.wired.com/feed/rss"]
+    rss_news_urls = ["https://www.wired.com/feed/rss", "https://www.nsnam.org/feed.xml"]
     data = []
     for url in rss_news_urls:
         data.append(feedparser.parse(url)['entries'])
@@ -20,4 +22,4 @@ def index():
 
 # Run the Flask application
 if __name__ == '__main__':
-    app.run(debug=True, port=8080)
+    serve(app)
